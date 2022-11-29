@@ -1,21 +1,6 @@
-/* 
-Machine Problem #5 by Sagar Rathod
-The program will encrypt and decrypt messages using a simple code.
-The program will read a keyword, insert them into a 5x5 array.
-    If a letter is repeated in the keyword, it will only be used once in the two-dimensional array.
-    Once the unique letters of the keyword are inserted into the array, 
-        the rest of the array will fill up with the remaining letters of the alphabet.
-The program will then read the series of lines to either encrypt or decrypt.
-The program will encrypt a lower case letter by reversing the row and column values.
-The program will decrypt an upper case letter by reversing the row and column value.
-The program will specifically process a file given to us.
-*/
-
-// Imported essential file library
 #include <fstream>
 #include <iostream>
 
-// Using the standard namespace
 using namespace std;
 
 // function to check to see if a character in the array already exists or not
@@ -79,7 +64,7 @@ void populate2dArray(char result[][5], string keyword) {
 
 // function to decrypt lines in file
 void decrypt(char table[][5], string input) {
-  string result;     // initializes empty string
+  string result;     
 
   for (int i = 0; i < input.size(); ++i) {
     bool found = false;
@@ -87,7 +72,7 @@ void decrypt(char table[][5], string input) {
       for (int k = 0; k < 5; ++k) {
         if (table[j][k] == input[i]) {    // compares array to keyword
           result += tolower(table[k][j]);     // reverses values of row and column values and changes char from upper case to lower case
-          found = true;     // changes bool statement to restart the loop
+          found = true;     // restart the loop
         }
       }
     }
@@ -102,16 +87,16 @@ void decrypt(char table[][5], string input) {
 }
 
 void encrypt(char table[][5], string input) {
-  string result;     // initializes empty string
+  string result;     
 
   for (int i = 0; i < input.size(); ++i) {
     bool found = false;
-    char upper = toupper(input[i]);     // changes char from lower case to upper case
+    char upper = toupper(input[i]);    
     for (int j = 0; j < 5; ++j) {
       for (int k = 0; k < 5; ++k) {
         if (table[j][k] == upper) {     // compares char to keyword array
           result += table[k][j];     // reverses row and column values to encrypt the char
-          found = true;     // changes bool statement to restart the loop
+          found = true;     // restarts the loop
         }
       }
     }
@@ -141,26 +126,26 @@ int main(void) {
   ifstream file("mp5input.txt");     // opens text file
 
   if (!file.is_open()) {
-    cout << "Cannot open file!" << endl;     // prompts error statement if file can't be opened
+    cout << "Cannot open file!" << endl;   
     return 1;
   }
 
-  string keyword;     // initializes keyword as a string
+  string keyword;     
   getline(file, keyword);     // reads first line/string from file
 
-  cout << "keyword is " << keyword << endl;     // prints keyword
+  cout << "keyword is " << keyword << endl;     
 
-  char table[5][5];     // initializes 5x5 array
+  char table[5][5];    
 
   populate2dArray(table, keyword);     // calls function to fill up 5x5 array with keyword
 
   print2dArray(table);     // prints array
 
-  string input;     // initializes empty string
+  string input;    
   while (getline(file, input)) {     // loop keeps going as long as there are lines in the file to process
     cout << "****************************************" << endl;
-    if (input[0] == 'D') {     // if line starts with 'D'
-      decrypt(table, input.substr(2, input.size()));     // calls decrypt function to decrypt line; .substr(2, )... skips first few chars of line
+    if (input[0] == 'D') {     
+      decrypt(table, input.substr(2, input.size()));     // calls decrypt function to decrypt line
     } else {
       encrypt(table, input.substr(2, input.size()));     // or else it will call the encrypt function to encrypt line
     }
